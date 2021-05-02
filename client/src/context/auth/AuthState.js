@@ -20,30 +20,31 @@ const AuthState = function (props) {
         loading: true,
         error: null
     }
+    const [state, dispatch] = useReducer(AuthReducer, initialState);
+
+    //Load user (check which user is logged in using the auth point)
+
+    //register user
+
+    //Login user
+
+    //Loggout
+
+    //Clear Errors (clear errors in the state)
+
+    return (
+        <AuthContext.Provider
+            value={{
+                token: state.token,
+                user:state.user,
+                isAuthenticated: state.isAuthenticated,
+                loading: state.loading,
+                error: state.error
+            }}
+        >
+            {props.children}
+        </AuthContext.Provider>
+    )
 }
 
-const [state, dispatch] = useReducer(AuthReducer);
-
-//Load user (check which user is logged in using the auth point)
-
-//register user
-
-//Login user
-
-//Loggout
-
-//Clear Errors (clear errors in the state)
-
-return (
-    <AuthContext.Provider
-        value={{
-            token: state.token,
-            user:state.user,
-            isAuthenticated: state.isAuthenticated,
-            loading: state.loading,
-            error: state.error
-        }}
-    >
-        {props.children}
-    </AuthContext.Provider>
-)
+export default AuthState

@@ -19,6 +19,12 @@ router.post('/register', [
         .isLength({min: 3,max:30})
         .withMessage("That name is too long! ")
         .matches(/^[A-Za-z .,'-]+$/),
+    check('phone')
+        .escape()
+        .notEmpty()
+        .withMessage("A phone number is required to register.")
+        .matches(/^[0-9 \(\).\+-]+$/)
+        .withMessage("Please use a phone number."),
     check('email')
         .escape()
         .notEmpty()
