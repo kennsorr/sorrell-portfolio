@@ -8,10 +8,10 @@ const { check, validationResult } = require("express-validator");
 
 const User = require('../models/User');
 
-// @route   /api/users
+// @route   /api/users/register
 // @desc    Register a user
 // @access  Public
-router.post('/', [
+router.post('/register', [
     check('name')
         .escape()
         .notEmpty()
@@ -43,7 +43,9 @@ router.post('/', [
             let user = await User.findOne({ email: req.body.email })
 
             if (user) {
-                //!!!!!! MAYBE WE SHOULD STILL RETURN A TOKEN, just skip data save
+                /* Note: technically, the user shouldn't see this, since the user logs in through auth.js using only email*/
+                /* if its a new user/email, this '/register' route appears with addition input fields (below)*/
+                /* if for some reason they they are still found in the DB after the fact, this message will show and token will be send as it should've from auth already */
                 msg = 'It looks like you\'ve visited before. Welcome back!'
                 
             } else {
@@ -67,7 +69,7 @@ router.post('/', [
             
             //payload, secret, options, callback
             jwt.sign(payload, config.get('jwtSecret'), {
-                expiresIn: 360000
+                expiresIn: 86400
             }, (err, token) => {
                 if (err) throw err;
                 res.json({msg, "token": token })
