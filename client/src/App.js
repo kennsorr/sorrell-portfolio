@@ -15,9 +15,10 @@ import './styles/App.scss';
 import ReactGA from 'react-ga';
 import { createBrowserHistory } from 'history';
 //context
-import NavMenuState from './context/navmenu/NavMenuState'
+import AuthState from './context/auth/AuthState'
 function App() {
   return (
+    <AuthState>
     <div className="App">
       {/* <Router history={history}> */}
       {/* <NavMenuState> */}
@@ -35,7 +36,8 @@ function App() {
           {/* <Footer></Footer> */}
         </Router>
       {/* </NavMenuState> */}
-  </div>
+      </div>
+    </AuthState>
   );
 }
 
