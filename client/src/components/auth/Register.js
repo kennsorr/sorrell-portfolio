@@ -1,24 +1,49 @@
 import React, {useState, useContext} from 'react'
 import AlertContext from '../../context/alert/AlertContext'
+import axios from 'axios';
+import AuthContext from '../../context/auth/AuthContext'
+import '../../styles/pages/Register.scss'
 
+import { VscChevronRight } from 'react-icons/vsc';
 function Register() {
     const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
     const { setAlert } = alertContext;
+    const { register } = authContext;
 
     const [user, setUser] = useState({
-        name: '',
-        email:'',
-        phone: '',
-        company:''
+        name: {value:'', error:'', focus:false},
+        email:{value:'', error:'', focus:false},
+        phone: {value:'', error:'', focus:false},
+        company:{value:'', error:'', focus:false}
     });
     
-    const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
-    const OnSubmit = e => {
+    
+    const onChange = e => {
+        //focus: true - for autocompleted fields
+        setUser({ ...user, [e.target.name]: {...user[e.target.name], value: e.target.value, focus: true} });
+    }
+    const onSubmit = e => {
         e.preventDefault();
-        if (user.name === '' || user.email === '' || user.phone === '' || user.company === '') {
-            setAlert("Please enter all fields.")
+        /** Not using frontend validation **/
+        // if (user.name === '' || user.email === '' || user.phone === '' || user.company === '') {
+        //     setAlert("Please enter all fields.")
+        // }
+        
+        //** send only the user data **//
+        const userData = {}
+        for(let prop in user){
+            userData[prop] = user[prop].value;
         }
-        console.log("Register User")
+        register(userData);
+    }
+    const onFocus = (e)=>{
+        setUser({ ...user, [e.target.name]: {...user[e.target.name], focus: true} });
+    }
+    const onBlur = (e)=>{
+        if(user[e.target.name].value === ""){
+            setUser({ ...user, [e.target.name]: {...user[e.target.name], focus: false} });
+        }
     }
     
     return (
@@ -26,24 +51,30 @@ function Register() {
             <h1>
                 I dont think we've met. Let's get to know eachother.
             </h1>
-            <form onSubmit={OnSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" name="name" value={user.name} onChange={onChange} minLength={ 3 } maxLength={ 30 }/>
+            <form onSubmit={onSubmit} autocomplete="off">
+                <div className={`form-group`}>
+                    <label htmlFor="name" className={`${user.name.focus ? "focused" : ""}`}>Name</label>
+                    <input type="text" name="name" className={`${user.name.focus ? "focused" : "n"}`} value={user.name.value} onChange={onChange} onFocus={onFocus} onBlur={onBlur} minLength={ 3 } maxLength={ 30 } autocomplete="off"/>
+                    <div className={`${user.name.focus ? "focused" : ""} border`}></div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="name">Email:</label>
-                    <input type="email" name="email" value={ user.email } onChange={ onChange } />
+                <div className={`form-group`}>
+                    <label htmlFor="name" className={`${user.email.focus ? "focused" : ""}`}>Email</label>
+                    <input type="email" name="email" className={`${user.email.focus ? "focused" : ""}`} value={ user.email.value } onChange={ onChange } onFocus={onFocus} onBlur={onBlur} />
+                    <div className={`${user.email.focus ? "focused" : ""} border`}></div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="name">Phone:</label>
-                    <input type="tel" name="phone" value={ user.phone } onChange={ onChange } />
+                <div className={`form-group`}>
+                    <label htmlFor="name" className={`${user.phone.focus ? "focused" : ""}`}>Phone</label>
+                    <input type="tel" name="phone" className={`${user.phone.focus ? "focused" : ""}`} value={ user.phone.value } onChange={ onChange } onFocus={onFocus} onBlur={onBlur} />
+                    <div className={`${user.phone.focus ? "focused" : ""} border`}></div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="company">Company:</label>
-                    <input type="text" name="company" value={ user.company } onChange={ onChange } minLength={ 3 } maxLength={ 20 }/>
+                <div className={`form-group`}>
+                    <label htmlFor="name" className={`${user.company.focus ? "focused" : ""}`}>Company</label>
+                    <input type="text" name="company" className={`${user.company.focus ? "focused" : ""}`} value={ user.company.value } onChange={ onChange } onFocus={onFocus} onBlur={onBlur} minLength={ 3 } maxLength={ 20 }/>
+                    <div className={`${user.company.focus ? "focused" : ""} border`}></div>
                 </div>
-                <input type="submit" value="Register"/>
+                <input type="submit" class="submit" value="Go"/>
+                {/* <FaBeer/> */}
+                <button className="submit">Go<VscChevronRight/></button>
             </form>
         </div>
     )

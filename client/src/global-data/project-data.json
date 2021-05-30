@@ -7,12 +7,12 @@
             "date":"03/01/2020",
             "cover-image":"",
             "urls":{
-                "live":["https://www.transperfectlegal.com/locations/map", "https://globallink.transperfect.com/our-offices"],
+                "live":["https://www.transperfectlegal.com/locations/map", "https://globallink.transperfect.com/our-offices", "https://www.transperfect.com/locations/map", "https://lifesciences.transperfect.com/about/locations"],
                 "locally-hosted":"",
                 "blogs": ["https://www.newmediacampaigns.com/work/transperfect-globallink-b2b-web-design"]
             },
             "description":{
-                "short":"This application uses data fetched from a CMS, maintained by the Operations at TransPerfect, to populate an interavtive map with informaation regarding TransPerfect global office locations.",
+                "short":"This application uses data fetched from a CMS, maintained by the Operations at TransPerfect, to populate an interavtive map with information regarding TransPerfect global office locations.",
                 "problem":"Prior to this project, several of our websites contained pages with static SVG maps displaying our office locations. Due to the fact that there are 90+ offices located around the world, and information like street address, phone number, and email addresses regarding these locations frequently changed, maintaining several static pages became impractical.",
                 "solutions":"This process was automated by creating a module on one of our internal sites where information regarding office locations could be easy maintained by the Operations team via the CMS. For there, using this data to populate a map using a third-party API was straight forward. We even took this a step further by creating a script tag that makes installing this map on new pages easy, and documentation that makes map customization simple."
             },

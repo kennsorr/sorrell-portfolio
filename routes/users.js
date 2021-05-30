@@ -16,27 +16,30 @@ router.post('/register', [
         .escape()
         .notEmpty()
         .withMessage("Please enter your name.")
-        .isLength({min: 3,max:30})
-        .withMessage("That name is too long! ")
+        .isLength({max:30})
+        .withMessage("This name is too long!")
+        .isLength({min: 3})
+        .withMessage("This name is too short!")
         .matches(/^[A-Za-z .,'-]+$/),
     check('phone')
         .escape()
         .notEmpty()
         .withMessage("A phone number is required to register.")
-        .matches(/^[0-9 \(\).\+-]+$/)
+        .matches(/^[0-9 \(\).\+-]{6,}$/)
         .withMessage("Please use a phone number."),
     check('email')
-        .escape()
         .notEmpty()
-        .withMessage("An email address is required to register.")
-        .isEmail()
+        .withMessage("An email address is required to register1.")
+        .isEmail().not()
         .withMessage("Please use an email address."),
     check('company')
         .escape()
         .notEmpty()
-        .withMessage('Please include youe company.')
-        .isLength({ min: 3, max: 20 })
+        .withMessage('Please include your company name.')
+        .isLength({ min: 3})
         .withMessage('Must be at least 3 characters.')
+        .isLength({ max: 20 })
+        .withMessage('Must be at least 20 characters.')
 ], async function (req, res) { 
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

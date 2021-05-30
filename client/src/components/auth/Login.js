@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import AlertContext from '../../context/alert/AlertContext'
+import axios from 'axios';
 function Login() {
     const [user, setUser] = useState({email:''});
     
     const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
     const OnSubmit = e => {
         e.preventDefault();
-        console.log("Login User")
+        console.log("Login User");
+        
     }
     
     return (

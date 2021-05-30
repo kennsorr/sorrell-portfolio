@@ -3,7 +3,6 @@ import { SET_ALERT, REMOVE_ALERT } from '../actions';
 function Reducer(state, action) {
     
     switch (action.type) {
-        
         case SET_ALERT:
             console.log("set ALERT")
             return [...state, action.payload]
