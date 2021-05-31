@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import PageHeader from '../layout/PageHeader'
+import AuthContext from '../../context/auth/AuthContext'
 function Home() {
+    const authContext = useContext(AuthContext);
+    useEffect(function () {
+        authContext.loadUser();
+    },[])
     return (
         <div id="main" className="Contact" style={{backgroundColor:'red'}}>
                 <PageHeader title="Contact" desc="Let's connect" display="none"></PageHeader>

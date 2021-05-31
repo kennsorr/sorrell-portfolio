@@ -1,7 +1,7 @@
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    USER_LOADDED,
+    USER_LOADED,
     AUTH_ERROR,
     LOGIN_SUCCESS, 
     LOGIN_FAIL,
@@ -19,9 +19,12 @@ export default (state, action) => {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                loading:false
+                loading:false,
+                error:null,
+                successmsg: action.payload.msg
             }
         case REGISTER_FAIL:
+        case AUTH_ERROR:
             console.log("REGISTER_FAIL")
             localStorage.removeItem('token');
             return {
@@ -31,6 +34,15 @@ export default (state, action) => {
                 loading: false,
                 user: null,
                 error:action.payload
+            }
+        case USER_LOADED:
+            console.log(action)
+            console.log("setting isAuthenticated to true")
+            return {
+                ...state,
+                isAuthenticated: true,
+                loading: false,
+                user: action.payload
             }
         default:
             console.log("Inside reducer, returning default: ", state)

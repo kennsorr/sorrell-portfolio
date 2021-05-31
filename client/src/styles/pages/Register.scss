@@ -1,3 +1,5 @@
+$error-red: #e80e0e;
+$my-black: #c6538c;
 .form-container{
     max-width: 500px;
     margin: 100px auto 0px auto;
@@ -7,55 +9,75 @@
     }
     .form-group{
         position:relative;
-    }
-    label{
-        &.focused{
-            font-size: 15px;
-            transform: translate(0px, 5px);
+        label{
+            &.focused{
+                font-size: 15px;
+                transform: translate(0px, 5px);
+            }
+            font-size: 20px;
+            transform: translate(0px, 36px);
+            display: block;
+            font-weight: 300;
+            pointer-events: none;
+            position: absolute;
+            transition:.3s all;
+            
         }
-        font-size: 20px;
-        transform: translate(0px, 36px);
-        display: block;
-        font-weight: 300;
-        pointer-events: none;
-        position: absolute;
-        transition:.3s all;
-    }
-    input:not(.submit){
-        &.focused{
+        input:not(.submit){
+            &.focused{
 
+            }
+            width: 100%;
+            margin-top: 28px;
+            font-size: 20px;
+            border: none;
+            border-bottom: 1px solid #0000004d;
+            padding: 0px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            transition:.3s all;
+            opacity:.5;
         }
-        width: 100%;
-        margin-top: 28px;
-        font-size: 20px;
-        border: none;
-        border-bottom: 1px solid #0000004d;
-        padding: 0px;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        transition:.3s all;
-    }
-    input.submit, button.submit{
-        background: transparent;
-        padding: 8px 20px;
-        font-size: 16px;
-        text-transform: uppercase;
-        float: right;
-        border: 1px solid black;
-        margin-top: 28px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .border{
-        width:0%;
-        transition:.3s all;
-        background-color:black;
-        height:1px;
-        margin-top:-1px;
-        position:absolute;
-        &.focused{
+        &.error input{
+            color:$error-red;
+        }
+        input:not(.submit):focus{
+            opacity:1;
+        }
+        
+        input:not(.submit):focus + .border {
             width:100%;
         }
+        div.error{
+             
+            font-size: 13px;
+
+        }
+        &.error{
+            label, input, .error{
+                color:$error-red;
+            }
+            .border{
+                color:$error-red;
+                background-color:$error-red;
+                
+            }
+        }
+        
     }
+    input.submit, button.submit{
+            background: transparent;
+            padding: 8px 20px;
+            font-size: 16px;
+            text-transform: uppercase;
+            float: right;
+            // border: 1px solid black;
+            border:none;
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor:pointer;
+        }
+    
 }

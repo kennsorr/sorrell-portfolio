@@ -2,10 +2,11 @@ import React, { useReducer } from 'react';
 import AuthContext from './AuthContext';
 import AuthReducer from './AuthReducer';
 import axios from 'axios'
+import setAuthToken from '../../utils/setAuthToken'
 import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    USER_LOADDED,
+    USER_LOADED,
     AUTH_ERROR,
     LOGIN_SUCCESS, 
     LOGIN_FAIL,
@@ -19,14 +20,27 @@ const AuthState = function (props) {
         user:null,
         isAuthenticated: null,
         loading: true,
-        error: null
+        error: null,
+        successmsg:null
     }
     const [state, dispatch] = useReducer(AuthReducer, initialState);
     console.log("AUTH STATE IS: ", state)
 
     /* Load user (check which user is logged in using the auth point) */
     const loadUser = async () => {
-        
+        //@todo - load toke into global headers
+        if(localStorage.token){
+            setAuthToken(localStorage.token)
+        }
+        try {
+            const res = await axios.get('/api/auth');
+            dispatch({
+                type: USER_LOADED,
+                payload: res.data
+            })
+        } catch (err) {
+            dispatch({type: AUTH_ERROR })
+        }
     }
     /* Register User */
     const register = async formData => {
@@ -43,18 +57,16 @@ const AuthState = function (props) {
                 type: REGISTER_SUCCESS,
                 payload:res.data /* token */
             });
+            loadUser();
         } catch (err) {
-            /* User could be in DB already */
-            console.log("ERRORRR")
-            console.log("AUTH STATE IS 1: ", state)
-            console.log("err: ", err)
-            console.log("err.response: ", err.response)
+            /* This only occurs when form info fails validation on backend */
+            /* if user info is already found in DB, it counts as a success */
+            console.log("ERROR/FAIL")
+            console.log("RES DATA IS: ", err.response)
             dispatch({
                 type: REGISTER_FAIL,
                 payload:err.response.data.errors
             });
-            
-            console.log("AUTH STATE IS 2: ", state)
         }
     }
     /* Login user */
@@ -77,6 +89,7 @@ const AuthState = function (props) {
                 isAuthenticated: state.isAuthenticated,
                 loading: state.loading,
                 error: state.error,
+                successmsg:state.successmsg,
                 loadUser,
                 register,
                 loginUser,

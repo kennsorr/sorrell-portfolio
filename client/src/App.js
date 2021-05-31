@@ -21,6 +21,10 @@ import { createBrowserHistory } from 'history';
 //context
 import AuthState from './context/auth/AuthState'
 import AlertState from './context/alert/AlertState'
+import setAuthToken from './utils/setAuthToken'
+if(localStorage.token){
+  setAuthToken(localStorage.token)
+  }
 function App() {
   return (
     <AlertState>
@@ -35,7 +39,7 @@ function App() {
             <Switch>
               
               {/* <Route exact path='*' component={Maintenance}></Route> */}
-              <Route exact path='/login' component={Login}></Route>
+              <Route exact path='/login' component={Register}></Route>
               <Route exact path='/register' component={Register}></Route>
               <Route exact path='/' component={Home}></Route>
               <Route exact path='/portfolio' component={Portfolio}></Route>
