@@ -19,6 +19,7 @@
     "config": "^3.3.6",
     "express": "^4.17.1",
     "express-validator": "^6.10.1",
+    "framer-motion": "^4.1.17",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.5",
     "react-icons": "^4.2.0",

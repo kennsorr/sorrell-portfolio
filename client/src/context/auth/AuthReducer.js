@@ -33,7 +33,7 @@ export default (state, action) => {
                 isAithenticated: false,
                 loading: false,
                 user: null,
-                error:action.payload
+                error: null
             }
         case USER_LOADED:
             console.log(action)
